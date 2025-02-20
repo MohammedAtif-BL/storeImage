@@ -1,0 +1,36 @@
+<project name="SpringBootAnt" default="run" basedir=".">
+    <!-- Define Properties -->
+    <property name="src.dir" value="src"/>
+    <property name="build.dir" value="build"/>
+    <property name="classes.dir" value="${build.dir}/classes"/>
+    <property name="lib.dir" value="lib"/>
+    <property name="main.class" value="com.bridgelabz.practice.PracticeApplication"/>
+
+    <!-- Define Classpath -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Clean Task -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Compile Java Files -->
+    <target name="compile" depends="clean">
+        <mkdir dir="${classes.dir}"/>
+        <javac srcdir="${src.dir}/main/java" destdir="${classes.dir}" classpathref="classpath"/>
+    </target>
+
+    <!-- Run the Application -->
+    <target name="run" depends="compile">
+        <java classname="${main.class}" fork="true">
+            <classpath>
+                <path refid="classpath"/>
+                <pathelement path="${classes.dir}"/>
+            </classpath>
+        </java>
+    </target>
+</project>
